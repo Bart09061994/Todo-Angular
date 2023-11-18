@@ -1,0 +1,49 @@
+<form class="example-form">
+  <mat-form-field class="example-full-width">
+    <mat-label></mat-label>
+    <input
+      id="input"
+      [(ngModel)]="newTask"
+      matInput
+      placeholder=""
+      name="newTask"
+    />
+    <button (click)="addTask()" mat-button color="primary">Aggiungi</button>
+  </mat-form-field>
+</form>
+<ul>
+  <div class="all" *ngIf="tasks.length > 1">
+    <button mat-button color="primary" (click)="completeAll()">
+      {{ allCompleted() ? "Riavvia Tutto" : "Completa Tutto" }}
+    </button>
+    <button mat-button color="warn" (click)="deleteAll()">Elimina tutto</button>
+  </div>
+  <li *ngFor="let task of tasks">
+    <span
+      class="span"
+      [style.textDecoration]="task.completed ? 'line-through' : ''"
+    >
+      <h2>{{ task.title }}</h2>
+    </span>
+    <button mat-button color="primary" (click)="editTask(task)">
+      <mat-icon class="create">create</mat-icon>
+    </button>
+    <button mat-button color="warn" (click)="deleteTask(task)">
+      <mat-icon>delete</mat-icon>
+    </button>
+    <button mat-button color="primary" (click)="completeTask(task)">
+      <mat-icon class="check"
+        >check {{ task.completed ? "Riavvia" : "Completa" }}</mat-icon
+      >
+    </button>
+    <ng-container *ngIf="task === editedTask">
+      <input
+        [(ngModel)]="editedTaskValue"
+        matInput
+        placeholder=""
+        name="editedTaskValue"
+      />
+      <button mat-button color="primary" (click)="taskEdited()">Salva</button>
+    </ng-container>
+  </li>
+</ul>
